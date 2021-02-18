@@ -3,7 +3,7 @@ import {View, Text} from 'react-native';
 
 export interface Props {}
 
-const Register: React.SFC<Props> = () => {
+const Register: FC<Props> = () => {
   return (
     <View>
       <Text>Registration Page</Text>
