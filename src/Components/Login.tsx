@@ -8,7 +8,7 @@ interface Props {
 
 const Login: FC<Props> = ({handleSubmit}) => {
   const [name, setName] = useState('');
-  const [email, setEmail] = useState('');
+  const [pass, setPass] = useState('');
 
   return (
     <View style={styles.container}>
@@ -20,13 +20,17 @@ const Login: FC<Props> = ({handleSubmit}) => {
         placeholder="name"></TextInput>
       <TextInput
         style={styles.inputField}
-        onChangeText={(email) => setEmail(email)}
-        placeholder="email"></TextInput>
+        onChangeText={(pass) => setPass(pass)}
+        secureTextEntry={true}
+        placeholder="pass"></TextInput>
       <Button
         onPress={() => {
-          handleSubmit(name, email);
+          handleSubmit(name, pass);
         }}
         title="Login"></Button>
+      {/* <Button
+        onPress={() => navigate('Display')}
+        title="Jump to Display"></Button> */}
     </View>
   );
 };
