@@ -2,41 +2,13 @@ import React, {FC, useContext, useState, useEffect} from 'react';
 
 import {View, Text, StyleSheet, TextInput, Button} from 'react-native';
 
-interface Props {}
+interface Props {
+  handleSubmit;
+}
 
-const Login: FC<Props> = () => {
+const Login: FC<Props> = ({handleSubmit}) => {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
-  const [users, setUsers] = useState([]);
-
-  useEffect(() => {
-    getUsers();
-  }, []);
-
-  const getUsers = async () => {
-    const Data = await fetch(`https://jsonplaceholder.typicode.com/users`);
-
-    const Users = await Data.json();
-
-    setUsers(Users);
-  };
-
-  const handleSubmit = (name, email) => {
-    let flag = 0;
-    const hit = users.map((user) => {
-      if (user.name === name && user.email === email) {
-        flag = 1;
-        return user.name;
-      }
-    });
-    if (flag === 0) {
-      alert('Invalid Username and Password');
-    } else {
-      alert('Logged In');
-    }
-
-    console.log(hit);
-  };
 
   return (
     <View style={styles.container}>
@@ -44,12 +16,17 @@ const Login: FC<Props> = () => {
 
       <TextInput
         style={styles.inputField}
-        onChangeText={(name) => setName(name)}></TextInput>
+        onChangeText={(name) => setName(name)}
+        placeholder="name"></TextInput>
       <TextInput
         style={styles.inputField}
         onChangeText={(email) => setEmail(email)}
-        secureTextEntry={true}></TextInput>
-      <Button onPress={() => handleSubmit(name, email)} title="Submit"></Button>
+        placeholder="email"></TextInput>
+      <Button
+        onPress={() => {
+          handleSubmit(name, email);
+        }}
+        title="Login"></Button>
     </View>
   );
 };
