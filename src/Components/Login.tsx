@@ -1,18 +1,43 @@
 import React, {FC, useContext, useState, useEffect} from 'react';
 
 import {View, Text, StyleSheet, TextInput, Button} from 'react-native';
+import {StackNavigationProp} from '@react-navigation/stack';
+import {AuthParamList} from '../AuthParamList';
+import {RouteProp} from '@react-navigation/native';
 
 interface Props {
-  handleSubmit;
+  navigation?: StackNavigationProp<AuthParamList, 'Login'>;
+  route?: RouteProp<AuthParamList, 'Login'>;
+  users;
 }
 
-const Login: FC<Props> = ({handleSubmit}) => {
+const Login: FC<Props> = ({navigation, route, users}) => {
   const [name, setName] = useState('');
   const [pass, setPass] = useState('');
+
+  //Login Submit Handler
+
+  const handleSubmit = (name, pass) => {
+    let flag = 0;
+    users.map((user) => {
+      if (user.name === name && user.pass === pass) {
+        flag = 1;
+      }
+    });
+    if (flag === 0) {
+      alert('Invalid Username and Password');
+      return false;
+    } else {
+      alert('Logged In');
+      navigation.navigate('Display');
+      return true;
+    }
+  };
 
   return (
     <View style={styles.container}>
       <Text style={styles.inContainer}>LOGIN</Text>
+      <Text style={styles.inContainer}>route name:{route.name}</Text>
 
       <TextInput
         style={styles.inputField}
@@ -28,9 +53,11 @@ const Login: FC<Props> = ({handleSubmit}) => {
           handleSubmit(name, pass);
         }}
         title="Login"></Button>
-      {/* <Button
-        onPress={() => navigate('Display')}
-        title="Jump to Display"></Button> */}
+      <Button
+        onPress={() => {
+          navigation.navigate('Display');
+        }}
+        title="Jump"></Button>
     </View>
   );
 };
